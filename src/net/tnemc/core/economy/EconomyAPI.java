@@ -618,6 +618,16 @@ public interface EconomyAPI {
 
   /**
    * Used to add funds to an account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param amount The amount you wish to add to this account.
+   * @return True if the funds were added to the account, otherwise false.
+   */
+  default boolean addHoldings(OfflinePlayer identifier, BigDecimal amount) {
+	  return addHoldings(identifier.getUniqueId(), amount);
+  }
+
+  /**
+   * Used to add funds to an account.
    * @param identifier The identifier of the account that is associated with this call.
    * @param amount The amount you wish to add to this account.
    * @param world The name of the {@link World} associated with the amount.
@@ -633,6 +643,17 @@ public interface EconomyAPI {
    * @return True if the funds were added to the account, otherwise false.
    */
   boolean addHoldings(UUID identifier, BigDecimal amount, String world);
+
+  /**
+   * Used to add funds to an account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param amount The amount you wish to add to this account.
+   * @param world The name of the {@link World} associated with the amount.
+   * @return True if the funds were added to the account, otherwise false.
+   */
+  default boolean addHoldings(OfflinePlayer identifier, BigDecimal amount, String world) {
+	  return addHoldings(identifier.getUniqueId(), amount, world);
+  }
 
   /**
    * Used to add funds to an account.
@@ -655,6 +676,18 @@ public interface EconomyAPI {
   boolean addHoldings(UUID identifier, BigDecimal amount, String world, String currency);
 
   /**
+   * Used to add funds to an account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param amount The amount you wish to add to this account.
+   * @param world The name of the {@link World} associated with the amount.
+   * @param currency The {@link Currency} associated with the balance.
+   * @return True if the funds were added to the account, otherwise false.
+   */
+  default boolean addHoldings(OfflinePlayer identifier, BigDecimal amount, String world, String currency) {
+	  return addHoldings(identifier.getUniqueId(), amount, world, currency);
+  }
+
+  /**
    * Used to determine if a call to the corresponding addHoldings method would be successful. This method does not
    * affect an account's funds.
    * @param identifier The identifier of the account that is associated with this call.
@@ -675,6 +708,17 @@ public interface EconomyAPI {
   /**
    * Used to determine if a call to the corresponding addHoldings method would be successful. This method does not
    * affect an account's funds.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param amount The amount you wish to add to this account.
+   * @return True if a call to the corresponding addHoldings method would return true, otherwise false.
+   */
+  default boolean canAddHoldings(OfflinePlayer identifier, BigDecimal amount) {
+	  return canAddHoldings(identifier.getUniqueId(), amount);
+  }
+
+  /**
+   * Used to determine if a call to the corresponding addHoldings method would be successful. This method does not
+   * affect an account's funds.
    * @param identifier The identifier of the account that is associated with this call.
    * @param amount The amount you wish to add to this account.
    * @param world The name of the {@link World} associated with the amount.
@@ -691,6 +735,18 @@ public interface EconomyAPI {
    * @return True if a call to the corresponding addHoldings method would return true, otherwise false.
    */
   boolean canAddHoldings(UUID identifier, BigDecimal amount, String world);
+
+  /**
+   * Used to determine if a call to the corresponding addHoldings method would be successful. This method does not
+   * affect an account's funds.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param amount The amount you wish to add to this account.
+   * @param world The name of the {@link World} associated with the amount.
+   * @return True if a call to the corresponding addHoldings method would return true, otherwise false.
+   */
+  default boolean canAddHoldings(OfflinePlayer identifier, BigDecimal amount, String world) {
+	  return canAddHoldings(identifier.getUniqueId(), amount, world);
+  }
 
   /**
    * Used to determine if a call to the corresponding addHoldings method would be successful. This method does not
