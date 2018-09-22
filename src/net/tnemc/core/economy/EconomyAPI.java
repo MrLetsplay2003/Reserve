@@ -1,6 +1,8 @@
 package net.tnemc.core.economy;
 
 import net.tnemc.core.economy.currency.Currency;
+
+import org.bukkit.OfflinePlayer;
 import org.bukkit.World;
 
 import java.math.BigDecimal;
@@ -106,6 +108,15 @@ public interface EconomyAPI {
   boolean hasAccount(UUID identifier);
 
   /**
+   * Checks to see if an account exists for this identifier.
+   * @param player The {@link OfflinePlayer} owner of the account.
+   * @return True if an account exists for this player, else false.
+   */
+  default boolean hasAccount(OfflinePlayer player) {
+	  return hasAccount(player.getUniqueId());
+  }
+
+  /**
    * Attempts to create an account for this identifier. This method should be used for non-player accounts.
    * @param identifier The identifier of the account.
    * @return True if an account was created, else false.
@@ -118,6 +129,15 @@ public interface EconomyAPI {
    * @return True if an account was created, else false.
    */
   boolean createAccount(UUID identifier);
+
+  /**
+   * Attempts to create an account for this identifier.
+   * @param player The {@link OfflinePlayer} owner of the account.
+   * @return True if an account was created, else false.
+   */
+  default boolean createAccount(OfflinePlayer player) {
+	  return createAccount(player.getUniqueId());
+  }
 
   /**
    * Attempts to delete an account for this identifier. This method should be used for non-player accounts.
@@ -134,6 +154,15 @@ public interface EconomyAPI {
   boolean deleteAccount(UUID identifier);
 
   /**
+   * Attempts to delete an account for this identifier.
+   * @param identifier The {@link OfflinePlayer} owner of the account.
+   * @return True if an account was deleted, else false.
+   */
+  default boolean deleteAccount(OfflinePlayer player) {
+	  return deleteAccount(player.getUniqueId());
+  }
+
+  /**
    * Determines whether or not a player is able to access this account.
    * @param identifier The identifier of the account that is associated with this call.
    * @param accessor The identifier of the user attempting to access this account.
@@ -148,6 +177,16 @@ public interface EconomyAPI {
    * @return Whether or not the player is able to access this account.
    */
   boolean isAccessor(String identifier, UUID accessor);
+  
+  /**
+   * Determines whether or not a player is able to access this account.
+   * @param identifier The identifier of the account that is associated with this call.
+   * @param accessor The user attempting to access this account.
+   * @return Whether or not the player is able to access this account.
+   */
+  default boolean isAccessor(String identifier, OfflinePlayer accessor) {
+	  return isAccessor(identifier, accessor.getUniqueId());
+  }
 
   /**
    * Determines whether or not a player is able to access this account.
@@ -159,11 +198,31 @@ public interface EconomyAPI {
 
   /**
    * Determines whether or not a player is able to access this account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param accessor The identifier of the user attempting to access this account.
+   * @return Whether or not the player is able to access this account.
+   */
+  default boolean isAccessor(OfflinePlayer identifier, String accessor) {
+	  return isAccessor(identifier.getUniqueId(), accessor);
+  }
+
+  /**
+   * Determines whether or not a player is able to access this account.
    * @param identifier The identifier of the account that is associated with this call.
    * @param accessor The identifier of the user attempting to access this account.
    * @return Whether or not the player is able to access this account.
    */
   boolean isAccessor(UUID identifier, UUID accessor);
+
+  /**
+   * Determines whether or not a player is able to access this account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param accessor The user attempting to access this account.
+   * @return Whether or not the player is able to access this account.
+   */
+  default boolean isAccessor(OfflinePlayer identifier, OfflinePlayer accessor) {
+	  return isAccessor(identifier.getUniqueId(), identifier.getUniqueId());
+  }
 
   /**
    * Determines whether or not a player is able to withdraw holdings from this account.
