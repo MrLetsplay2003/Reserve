@@ -243,10 +243,30 @@ public interface EconomyAPI {
   /**
    * Determines whether or not a player is able to withdraw holdings from this account.
    * @param identifier The identifier of the account that is associated with this call.
+   * @param accessor The user attempting to access this account.
+   * @return Whether or not the player is able to withdraw holdings from this account.
+   */
+  default boolean canWithdraw(String identifier, OfflinePlayer accessor) {
+	  return canWithdraw(identifier, accessor.getUniqueId());
+  }
+
+  /**
+   * Determines whether or not a player is able to withdraw holdings from this account.
+   * @param identifier The identifier of the account that is associated with this call.
    * @param accessor The identifier of the user attempting to access this account.
    * @return Whether or not the player is able to withdraw holdings from this account.
    */
   boolean canWithdraw(UUID identifier, String accessor);
+
+  /**
+   * Determines whether or not a player is able to withdraw holdings from this account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param accessor The identifier of the user attempting to access this account.
+   * @return Whether or not the player is able to withdraw holdings from this account.
+   */
+  default boolean canWithdraw(OfflinePlayer identifier, String accessor) {
+	  return canWithdraw(identifier.getUniqueId(), accessor);
+  }
 
   /**
    * Determines whether or not a player is able to withdraw holdings from this account.
@@ -255,6 +275,16 @@ public interface EconomyAPI {
    * @return Whether or not the player is able to withdraw holdings from this account.
    */
   boolean canWithdraw(UUID identifier, UUID accessor);
+
+  /**
+   * Determines whether or not a player is able to withdraw holdings from this account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param accessor The user attempting to access this account.
+   * @return Whether or not the player is able to withdraw holdings from this account.
+   */
+  default boolean canWithdraw(OfflinePlayer identifier, OfflinePlayer accessor) {
+	  return canWithdraw(identifier.getUniqueId(), accessor.getUniqueId());
+  }
 
   /**
    * Determines whether or not a player is able to deposit holdings into this account.
@@ -275,10 +305,30 @@ public interface EconomyAPI {
   /**
    * Determines whether or not a player is able to deposit holdings into this account.
    * @param identifier The identifier of the account that is associated with this call.
+   * @param accessor The user attempting to access this account.
+   * @return Whether or not the player is able to deposit holdings into this account.
+   */
+  default boolean canDeposit(String identifier, OfflinePlayer accessor) {
+	  return canDeposit(identifier, accessor.getUniqueId());
+  }
+
+  /**
+   * Determines whether or not a player is able to deposit holdings into this account.
+   * @param identifier The identifier of the account that is associated with this call.
    * @param accessor The identifier of the user attempting to access this account.
    * @return Whether or not the player is able to deposit holdings into this account.
    */
   boolean canDeposit(UUID identifier, String accessor);
+
+  /**
+   * Determines whether or not a player is able to deposit holdings into this account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param accessor The identifier of the user attempting to access this account.
+   * @return Whether or not the player is able to deposit holdings into this account.
+   */
+  default boolean canDeposit(OfflinePlayer identifier, String accessor) {
+	  return canDeposit(identifier.getUniqueId(), accessor);
+  }
 
   /**
    * Determines whether or not a player is able to deposit holdings into this account.
@@ -287,6 +337,16 @@ public interface EconomyAPI {
    * @return Whether or not the player is able to deposit holdings into this account.
    */
   boolean canDeposit(UUID identifier, UUID accessor);
+
+  /**
+   * Determines whether or not a player is able to deposit holdings into this account.
+   * @param identifier The identifier of the account that is associated with this call.
+   * @param accessor The identifier of the user attempting to access this account.
+   * @return Whether or not the player is able to deposit holdings into this account.
+   */
+  default boolean canDeposit(OfflinePlayer identifier, OfflinePlayer accessor) {
+	  return canDeposit(identifier.getUniqueId(), accessor.getUniqueId());
+  }
 
   /**
    * Used to get the balance of an account.
@@ -305,6 +365,15 @@ public interface EconomyAPI {
   /**
    * Used to get the balance of an account.
    * @param identifier The identifier of the account that is associated with this call.
+   * @return The balance of the account.
+   */
+  default BigDecimal getHoldings(OfflinePlayer identifier) {
+	  return getHoldings(identifier.getUniqueId());
+  }
+
+  /**
+   * Used to get the balance of an account.
+   * @param identifier The identifier of the account that is associated with this call.
    * @param world The name of the {@link World} associated with the balance.
    * @return The balance of the account.
    */
@@ -317,6 +386,16 @@ public interface EconomyAPI {
    * @return The balance of the account.
    */
   BigDecimal getHoldings(UUID identifier, String world);
+
+  /**
+   * Used to get the balance of an account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param world The name of the {@link World} associated with the balance.
+   * @return The balance of the account.
+   */
+  default BigDecimal getHoldings(OfflinePlayer identifier, String world) {
+	  return getHoldings(identifier.getUniqueId());
+  }
 
   /**
    * Used to get the balance of an account.
@@ -337,6 +416,17 @@ public interface EconomyAPI {
   BigDecimal getHoldings(UUID identifier, String world, String currency);
 
   /**
+   * Used to get the balance of an account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param world The name of the {@link World} associated with the balance.
+   * @param currency The {@link Currency} associated with the balance.
+   * @return The balance of the account.
+   */
+  default BigDecimal getHoldings(OfflinePlayer identifier, String world, String currency) {
+	  return getHoldings(identifier.getUniqueId(), world, currency);
+  }
+
+  /**
    * Used to determine if an account has at least an amount of funds.
    * @param identifier The identifier of the account that is associated with this call.
    * @param amount The amount you wish to use for this check.
@@ -351,6 +441,16 @@ public interface EconomyAPI {
    * @return True if the account has at least the specified amount of funds, otherwise false.
    */
   boolean hasHoldings(UUID identifier, BigDecimal amount);
+
+  /**
+   * Used to determine if an account has at least an amount of funds.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param amount The amount you wish to use for this check.
+   * @return True if the account has at least the specified amount of funds, otherwise false.
+   */
+  default boolean hasHoldings(OfflinePlayer identifier, BigDecimal amount) {
+	  return hasHoldings(identifier.getUniqueId(), amount);
+  }
 
   /**
    * Used to determine if an account has at least an amount of funds.
@@ -369,6 +469,17 @@ public interface EconomyAPI {
    * @return True if the account has at least the specified amount of funds, otherwise false.
    */
   boolean hasHoldings(UUID identifier, BigDecimal amount, String world);
+
+  /**
+   * Used to determine if an account has at least an amount of funds.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param amount The amount you wish to use for this check.
+   * @param world The name of the {@link World} associated with the amount.
+   * @return True if the account has at least the specified amount of funds, otherwise false.
+   */
+  default boolean hasHoldings(OfflinePlayer identifier, BigDecimal amount, String world) {
+	  return hasHoldings(identifier.getUniqueId(), amount, world);
+  }
 
   /**
    * Used to determine if an account has at least an amount of funds.
@@ -391,6 +502,18 @@ public interface EconomyAPI {
   boolean hasHoldings(UUID identifier, BigDecimal amount, String world, String currency);
 
   /**
+   * Used to determine if an account has at least an amount of funds.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param amount The amount you wish to use for this check.
+   * @param world The name of the {@link World} associated with the amount.
+   * @param currency The {@link Currency} associated with the balance.
+   * @return True if the account has at least the specified amount of funds, otherwise false.
+   */
+  default boolean hasHoldings(OfflinePlayer identifier, BigDecimal amount, String world, String currency) {
+	  return hasHoldings(identifier.getUniqueId(), amount, world, currency);
+  }
+
+  /**
    * Used to set the funds to an account.
    * @param identifier The identifier of the account that is associated with this call.
    * @param amount The amount you wish to set this accounts's funds to.
@@ -405,6 +528,16 @@ public interface EconomyAPI {
    * @return True if the funds were set for the account, otherwise false.
    */
   boolean setHoldings(UUID identifier, BigDecimal amount);
+
+  /**
+   * Used to set the funds to an account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param amount The amount you wish to set this accounts's funds to.
+   * @return True if the funds were set for the account, otherwise false.
+   */
+  default boolean setHoldings(OfflinePlayer identifier, BigDecimal amount) {
+	  return setHoldings(identifier.getUniqueId(), amount);
+  }
 
   /**
    * Used to set the funds to an account.
@@ -426,6 +559,17 @@ public interface EconomyAPI {
 
   /**
    * Used to set the funds to an account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param amount The amount you wish to set this accounts's funds to.
+   * @param world The name of the {@link World} associated with the amount.
+   * @return True if the funds were set for the account, otherwise false.
+   */
+  default boolean setHoldings(OfflinePlayer identifier, BigDecimal amount, String world) {
+	  return setHoldings(identifier.getUniqueId(), amount, world);
+  }
+
+  /**
+   * Used to set the funds to an account.
    * @param identifier The identifier of the account that is associated with this call.
    * @param amount The amount you wish to set this accounts's funds to.
    * @param world The name of the {@link World} associated with the amount.
@@ -443,6 +587,18 @@ public interface EconomyAPI {
    * @return True if the funds were set for the account, otherwise false.
    */
   boolean setHoldings(UUID identifier, BigDecimal amount, String world, String currency);
+
+  /**
+   * Used to set the funds to an account.
+   * @param identifier The owner of the account that is associated with this call.
+   * @param amount The amount you wish to set this accounts's funds to.
+   * @param world The name of the {@link World} associated with the amount.
+   * @param currency The {@link Currency} associated with the balance.
+   * @return True if the funds were set for the account, otherwise false.
+   */
+  default boolean setHoldings(OfflinePlayer identifier, BigDecimal amount, String world, String currency) {
+	  return setHoldings(identifier.getUniqueId(), amount, world, currency);
+  }
 
   /**
    * Used to add funds to an account.
